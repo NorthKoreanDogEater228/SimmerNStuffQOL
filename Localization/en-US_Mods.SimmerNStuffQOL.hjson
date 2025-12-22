@@ -1,0 +1,90 @@
+Configs: {
+	ShimmerNStuffConfig: {
+		DisplayName: Shimmer N Stuff Config
+
+		SomeInt: {
+			Label: Some Int
+			Tooltip: ""
+		}
+
+		WingSlotLoadoutSupportToggle: {
+			Label: Wing Slot Loadout Support Toggle
+			Tooltip: ""
+		}
+
+		SomeArray: {
+			Label: Some Array
+			Tooltip: ""
+		}
+
+		Bt: {
+			Label: Bt
+			Tooltip: ""
+		}
+
+		Bf: {
+			Label: Bf
+			Tooltip: ""
+		}
+
+		MyIntValue: {
+			Label: My Int Value
+			Tooltip: ""
+		}
+
+		DefaultMerchantPriceMultiplier: {
+			Label: Default Merchant Price Multiplier
+			Tooltip: ""
+		}
+
+		WillMerchantSellItems: {
+			Label: Will Merchant Sell Items
+			Tooltip: ""
+		}
+
+		DefaultPriceForPricelessItemsInCopperCoins: {
+			Label: Default Price For Priceless Items In Copper Coins
+			Tooltip: ""
+		}
+
+		EndlessAmmoEnabled: {
+			Label: Endless Ammo Enabled
+			Tooltip: ""
+		}
+
+		DefaultEndlessAmmoValue: {
+			Label: Default Endless Ammo Value
+			Tooltip: ""
+		}
+
+		DefaultEndlessAmmoCount: {
+			Label: Default Endless Ammo Count
+			Tooltip: ""
+		}
+
+		GenerateBannerToItemRecipes: {
+			Tooltip: ""
+			Label: Generate Banner To Item Recipes
+		}
+
+		GenerateBossBagOrCrateToItemRecipes: {
+			Tooltip: ""
+			Label: Generate Boss Bag Or Crate To Item Recipes
+		}
+
+		GenerateMobDropsTransmutations: {
+			Tooltip: ""
+			Label: Generate Mob Drops Transmutations
+		}
+
+		GenerateBossBagsAndCratesDropsTransmutations: {
+			Tooltip: ""
+			Label: Generate Boss Bags And Crates Drops Transmutations
+		}
+
+		DefaultBossBagOrCrateMerchantPriceMultiplier: {
+			Label: Default Boss Bag Or Crate Merchant Price Multiplier
+			Tooltip: ""
+		}
+	}
+}
