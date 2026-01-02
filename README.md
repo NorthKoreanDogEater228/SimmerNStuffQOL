@@ -21,8 +21,8 @@ I also plan adding infinite arena buffs when item is in your inventory (if i wil
  <font size="4">7) Full mod support.</font><br>
 
 # Pictures:
-![My screenshot](media\modListScreen2.png)
-![My screenshot](media\merchantShopScreen1.png)
-![My screenshot](media\configScreen1.png)
-![My screenshot](media\ShimmerNStuffPreview1.png)
+<img src="media/modListScreen2.png"/>
+<img src="media/merchantShopScreen1.png"/>
+<img src="media/configScreen1.png"/>
+<img src="media/ShimmerNStuffPreview1.png"/>
 <img src="media/transmuteForGif1.gif" width="1440" height="900" />
