@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SimmerNStuffQOL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a5a223116cceaa73cf541018a14df15d3bf0859")]
 [assembly: System.Reflection.AssemblyProductAttribute("SimmerNStuffQOL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SimmerNStuffQOL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

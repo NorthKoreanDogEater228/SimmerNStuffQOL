@@ -43,16 +43,5 @@ namespace SimmerNStuffQOL
                 }
             }
         }
-        // public override void OnConsumeItem(Item item, Player player)
-        // {
-        //     foreach (Item i in player.inventory)
-        //         {
-        //             if (item.stack >= ModContent.GetInstance<ShimmerNStuffConfig>().DefaultEndlessAmmoCount && i.type == item.type)
-        //             {
-        //                 item.stack += 1;
-        //                 break;
-        //             }
-        //         }
-        // }
     }
 }

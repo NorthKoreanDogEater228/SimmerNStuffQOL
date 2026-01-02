@@ -19,8 +19,8 @@ namespace SimmerNStuffQOL
 	
 	public class SimmerNStuffQOL : Mod
 	{
-		public override void Load(){
-
+		public override void Load()
+		{
 			
 		}
 	}

@@ -46,18 +46,18 @@ namespace SimmerNStuffQOL
         [DefaultValue(true)]
         public bool WillMerchantSellItems;
         
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         [DefaultValue(3)]
         public int DefaultMerchantPriceMultiplier;
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         [DefaultValue(1)]
         public int DefaultBossBagOrCrateMerchantPriceMultiplier;
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         [DefaultValue(100)]
         public int DefaultPriceForPricelessItemsInCopperCoins;
          [DefaultValue(true)]
         public bool EndlessAmmoEnabled;
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         [DefaultValue(100)]
         public int DefaultEndlessAmmoCount;
     }

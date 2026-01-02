@@ -29,6 +29,7 @@ namespace SimmerNStuffQOL
 {
     public class Utils : ModSystem
     {
+        public static Dictionary<IItemDropRuleCondition, bool> itemDropConds = new Dictionary<IItemDropRuleCondition, bool>();
         public static IItemDropRuleCondition condition;
         public static Dictionary<int, bool> genericRules = new Dictionary<int, bool>();
         
@@ -77,13 +78,20 @@ namespace SimmerNStuffQOL
         }
         public static Condition FromDropCondition(IItemDropRuleCondition dropCondition, NPC npc)
         {
+            if (!itemDropConds.ContainsKey(dropCondition))
+            {
+                itemDropConds.Add(dropCondition, false);
+            }
             
             var dropInfo = new DropAttemptInfo
             {
                 npc = npc,
                 player = Main.LocalPlayer
             };
-            return new Condition(LocalizedText.Empty, () => dropCondition.CanDrop(dropInfo));
+            
+            bool canDrop = dropCondition.CanDrop(dropInfo);
+            //return new Condition(LocalizedText.Empty, () => dropCondition.CanDrop(dropInfo));
+            return new Condition(LocalizedText.Empty, () => itemDropConds[dropCondition]);
         }
         public static bool CanDropByCond(IItemDropRuleCondition dropCondition, NPC npc)
         {

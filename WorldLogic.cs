@@ -38,16 +38,39 @@ namespace SimmerNStuffQOL
 		Dictionary<int, Dictionary<IItemDropRule, NPC>> checkRules = new Dictionary<int, Dictionary<IItemDropRule, NPC>>();
 		public static Dictionary<int, int> bagValues = new Dictionary<int, int>();
 		List<Recipe> bannedRecipes = new List<Recipe>();
+		NPC p = new NPC();
+		Item condI = new Item();
+		List<string> dropRuleConditions = new List<string> { "FromCertainWaveAndAbove", "NotExpert", "NotMasterMode", "NotFromStatue", "IsBloodMoonAndNotFromStatue" };
 		public override void PostUpdateWorld()
 		{
+			// counter++;
+			// if (counter > 900000000)
+			// {
+			// 	p.SetDefaults(1);
+			// 	counter = 0;
+			// 	foreach (KeyValuePair<IItemDropRuleCondition, bool> r in Utils.itemDropConds)
+			// 	{
+
+			// 		p.SetDefaults(1);
+			// 		var dropInfo = new DropAttemptInfo
+			// 		{
+			// 			npc = p,
+			// 			item = 130,
+			// 			player = Main.LocalPlayer
+			// 		};
+			// 		Main.NewText(r.Key.CanDrop(dropInfo));
+			// 		//Main.NewText(r.Key.TryDroppingItem(dropInfo));
+
+			// 	}
+			// }
 			//my testing space
 			if (/* needToPlay */ false)
 			{
 				ids = new List<int>();
-				
-				for (int ID = -65; ID < NPCLoader.NPCCount; ID++)
+				needToPlay = false;
+				for (int ID = 120; ID < 121; ID++)
 				{
-					
+
 					Main.NewText("NPC NAME : " + Lang.GetNPCNameValue(ID));
 					List<IItemDropRule> rules = Main.ItemDropsDB.GetRulesForNPCID(ID);
 					DropRateInfoChainFeed chainFeed = new DropRateInfoChainFeed(1f);
@@ -57,86 +80,110 @@ namespace SimmerNStuffQOL
 					Dictionary<int, List<IItemDropRuleCondition>> conditionList = new Dictionary<int, List<IItemDropRuleCondition>>();
 					foreach (IItemDropRule rule in rules)
 					{
+
 						rule.ReportDroprates(dropRates, chainFeed);
+						// p.SetDefaults(1);
+						// var dropInfo = new DropAttemptInfo
+						// {
+						// 	npc = p,
+						// 	item = 1488,
+						// 	player = Main.LocalPlayer
+						// };
+
+						// Main.NewText(rule.CanDrop(dropInfo));
+						// Main.NewText(rule.TryDroppingItem(dropInfo));
 					}
 					if (dropRates == null) { continue; }
 					foreach (DropRateInfo dropRate in dropRates)
 					{
 
-						if (!(banned.Contains(dropRate.itemId)) && !(ids.Contains(dropRate.itemId)) && !(bags.Contains(dropRate.itemId)) /* && !(bagContainments.Contains(dropRate.itemId)) */)
+						Main.NewText(Lang.GetItemNameValue(dropRate.itemId));
+
+
+						foreach (IItemDropRuleCondition item in dropRate.conditions)
 						{
-							float round = (float)Math.Round(dropRate.dropRate, 4);
-							if (dropRate.conditions != null)
+							// string s = item.GetConditionDescription();
+							Main.NewText(item.GetType().Name);
+							if (item.GetType().Name.Contains("Wave") || item.GetType().Name.Contains("Chance") || item.GetType().Name.Contains("Not"))
 							{
-
-								int hash = 0;
-								foreach (IItemDropRuleCondition cond in dropRate.conditions)
-								{
-									 
-									Main.NewText(cond.GetConditionDescription());
-									Main.NewText(Lang.GetItemNameValue(dropRate.itemId));
-									Main.NewText(dropRate.dropRate);
-									hash += cond.GetHashCode();
-								}
-								if (conditionDictionary.ContainsKey(hash))
-								{
-									if (conditionDictionary[hash].ContainsKey(/* dropRate.dropRate */round))
-									{
-										conditionDictionary[hash][/* dropRate.dropRate */round].Add(dropRate.itemId);
-										if (!conditionList.ContainsKey(dropRate.itemId))
-										{
-											conditionList.Add(dropRate.itemId, dropRate.conditions);
-										}
-										// Main.NewText("added " + Lang.GetItemNameValue(dropRate.itemId));
-										// Main.NewText(hash);
-									}
-									else
-									{
-										float key = /* dropRate.dropRate */round;
-										List<int> ints = new List<int>();
-										ints.Add(dropRate.itemId);
-										conditionDictionary[hash].Add(key, ints);
-										if (!conditionList.ContainsKey(dropRate.itemId))
-										{
-											conditionList.Add(dropRate.itemId, dropRate.conditions);
-										}
-
-										// Main.NewText(dropRate.itemId);
-										// Main.NewText("added new droprate " + Lang.GetItemNameValue(dropRate.itemId));
-									}
-
-								}
-								else
-								{
-									Dictionary<float, List<int>> dict = new Dictionary<float, List<int>>();
-									float key = dropRate.dropRate;
-									List<int> ints = new List<int>();
-									ints.Add(dropRate.itemId);
-									dict.Add(key, ints);
-									conditionDictionary.Add(hash, dict);
-									if (!conditionList.ContainsKey(dropRate.itemId))
-									{
-										conditionList.Add(dropRate.itemId, dropRate.conditions);
-									}
-									//Main.NewText("added new conditions " + Lang.GetItemNameValue(dropRate.itemId));
-								}
-							}
-							else
-							{
-								Main.NewText(Lang.GetItemNameValue(dropRate.itemId) + " NO CONDITIONS");
-								if (drops.ContainsKey(dropRate.dropRate))
-								{
-									drops[dropRate.dropRate].Add(dropRate.itemId);
-								}
-								else
-								{
-									float key = dropRate.dropRate;
-									List<int> ints = new List<int>();
-									ints.Add(dropRate.itemId);
-									drops.Add(key, ints);
-								}
+								Main.NewText("register");
 							}
 						}
+
+						// if (!(banned.Contains(dropRate.itemId)) && !(ids.Contains(dropRate.itemId)) && !(bags.Contains(dropRate.itemId)) /* && !(bagContainments.Contains(dropRate.itemId)) */)
+						// {
+						// 	float round = (float)Math.Round(dropRate.dropRate, 4);
+						// 	if (dropRate.conditions != null)
+						// 	{
+
+						// 		int hash = 0;
+						// 		foreach (IItemDropRuleCondition cond in dropRate.conditions)
+						// 		{
+
+						// 			Main.NewText(cond.GetConditionDescription());
+						// 			Main.NewText(Lang.GetItemNameValue(dropRate.itemId));
+						// 			Main.NewText(dropRate.dropRate);
+						// 			hash += cond.GetHashCode();
+						// 		}
+						// 		if (conditionDictionary.ContainsKey(hash))
+						// 		{
+						// 			if (conditionDictionary[hash].ContainsKey(/* dropRate.dropRate */round))
+						// 			{
+						// 				conditionDictionary[hash][/* dropRate.dropRate */round].Add(dropRate.itemId);
+						// 				if (!conditionList.ContainsKey(dropRate.itemId))
+						// 				{
+						// 					conditionList.Add(dropRate.itemId, dropRate.conditions);
+						// 				}
+						// 				// Main.NewText("added " + Lang.GetItemNameValue(dropRate.itemId));
+						// 				// Main.NewText(hash);
+						// 			}
+						// 			else
+						// 			{
+						// 				float key = /* dropRate.dropRate */round;
+						// 				List<int> ints = new List<int>();
+						// 				ints.Add(dropRate.itemId);
+						// 				conditionDictionary[hash].Add(key, ints);
+						// 				if (!conditionList.ContainsKey(dropRate.itemId))
+						// 				{
+						// 					conditionList.Add(dropRate.itemId, dropRate.conditions);
+						// 				}
+
+						// 				// Main.NewText(dropRate.itemId);
+						// 				// Main.NewText("added new droprate " + Lang.GetItemNameValue(dropRate.itemId));
+						// 			}
+
+						// 		}
+						// 		else
+						// 		{
+						// 			Dictionary<float, List<int>> dict = new Dictionary<float, List<int>>();
+						// 			float key = dropRate.dropRate;
+						// 			List<int> ints = new List<int>();
+						// 			ints.Add(dropRate.itemId);
+						// 			dict.Add(key, ints);
+						// 			conditionDictionary.Add(hash, dict);
+						// 			if (!conditionList.ContainsKey(dropRate.itemId))
+						// 			{
+						// 				conditionList.Add(dropRate.itemId, dropRate.conditions);
+						// 			}
+						// 			//Main.NewText("added new conditions " + Lang.GetItemNameValue(dropRate.itemId));
+						// 		}
+						// 	}
+						// 	else
+						// 	{
+						// 		Main.NewText(Lang.GetItemNameValue(dropRate.itemId) + " NO CONDITIONS");
+						// 		if (drops.ContainsKey(dropRate.dropRate))
+						// 		{
+						// 			drops[dropRate.dropRate].Add(dropRate.itemId);
+						// 		}
+						// 		else
+						// 		{
+						// 			float key = dropRate.dropRate;
+						// 			List<int> ints = new List<int>();
+						// 			ints.Add(dropRate.itemId);
+						// 			drops.Add(key, ints);
+						// 		}
+						// 	}
+						// }
 					}
 					List<float> keys = new List<float>();
 					List<List<int>> allItems = new List<List<int>>();
@@ -225,7 +272,7 @@ namespace SimmerNStuffQOL
 									allItems.Add(values);
 									foreach (int value in values)
 									{
-										
+
 										ids.Add(value);
 									}
 								}
@@ -269,6 +316,10 @@ namespace SimmerNStuffQOL
 		public override void OnWorldUnload()
 		{
 			needToPlay = true;
+			// foreach (KeyValuePair<IItemDropRuleCondition, bool> r in Utils.itemDropConds)
+			// {
+			// 	Utils.itemDropConds[r.Key] = false;
+			// }
 		}
 		public override void PostAddRecipes()
 		{
@@ -329,7 +380,7 @@ namespace SimmerNStuffQOL
 						List<int> con = new List<int>();
 						recipe.AddIngredient(banner, 1);
 						recipe.DisableDecraft();
-						
+
 
 						List<Recipe> bannedRec = new List<Recipe>();
 						if (!bannedRec.Contains(recipe))
@@ -379,9 +430,6 @@ namespace SimmerNStuffQOL
 						// 		duplicates[dropRate.itemId].Add(l);
 						// 	}
 						// }
-
-
-
 					}
 					if (!ModContent.GetInstance<ShimmerNStuffConfig>().GenerateBossBagsAndCratesDropsTransmutations)
 					{
@@ -498,7 +546,6 @@ namespace SimmerNStuffQOL
 				Main.NewText(allItems.Count);
 				foreach (List<int> ints in allItems)
 				{
-					
 					foreach (int value in ints)
 					{
 						if (ints.IndexOf(value) < ints.Count - 1)
@@ -530,7 +577,7 @@ namespace SimmerNStuffQOL
 							}
 						}
 					}
-				
+
 				}
 				keys = new List<float>();
 				allItems = new List<List<int>>();
@@ -538,7 +585,6 @@ namespace SimmerNStuffQOL
 				{
 					foreach (KeyValuePair<float, List<int>> entry1 in entry.Value)
 					{
-						
 						if (!keys.Contains(entry1.Key))
 						{
 							List<int> values = new List<int>();
@@ -552,14 +598,13 @@ namespace SimmerNStuffQOL
 										values = values.Union(entry2.Value).ToList();
 										keys.Add(entry1.Key);
 										keys.Add(entry2.Key);
-										
+
 									}
 								}
 							}
 							values.RemoveAll(x => ids.Contains(x));
 							if (values.Count > 1)
 							{
-
 								allItems.Add(values);
 								foreach (int value in values)
 								{
@@ -569,12 +614,10 @@ namespace SimmerNStuffQOL
 							}
 						}
 					}
-
 				}
 				allItems = Utils.FindIntersection(allItems);
 				foreach (List<int> ints in allItems)
 				{
-
 					foreach (int value in ints)
 					{
 						if (ints.IndexOf(value) < ints.Count - 1)
@@ -589,11 +632,9 @@ namespace SimmerNStuffQOL
 							// {
 							// 	// NPC npc = new NPC();
 							// 	// npc.SetDefaults(ID);
-
 							// 	recipe.AddDecraftCondition(Utils.FromDropCondition(condition, null));
 							// }
 							recipe.Register();
-
 						}
 						else
 						{
@@ -717,7 +758,7 @@ namespace SimmerNStuffQOL
 									}
 									else
 									{
-										
+
 										perBannerBan[banner].Add(dropRate.itemId);
 									}
 								}
@@ -726,49 +767,56 @@ namespace SimmerNStuffQOL
 									List<int> l = new List<int>();
 									l.Add(dropRate.itemId);
 									perBannerBan.Add(banner, l);
-									
+
 								}
 
 								recipe.Register();
 								bannedRec.Add(recipe);
 								idBan.Add(dropRate.itemId);
-
 							}
 						}
-						// if (dropRate.conditions != null && !bannerBan.Contains(dropRate.itemId))
-						// {
-						// 	List<IItemDropRuleCondition> bannerConds = new List<IItemDropRuleCondition>();
-						// 	bannerConds = dropRate.conditions;
-
-						// 	List<int> l = new List<int>();
-
-
-						// 	foreach (IItemDropRuleCondition cond in bannerConds)
-						// 	{
-
-
-
-
-						// 		recipe.AddCondition(Utils.FromDropCondition(cond, npc));
-						// 		l.Add(cond.GetHashCode());
-
-
-						// 	}
-						// 	if (!duplicates.ContainsKey(dropRate.itemId))
-						// 	{
-
-						// 		recipe.Register();
-						// 		duplicates.Add(dropRate.itemId, [l]);
-						// 	}
-						// 	else if (!(duplicates[dropRate.itemId].Contains(l)))
-						// 	{
-						// 		recipe.Register();
-						// 		duplicates[dropRate.itemId].Add(l);
-						// 	}
-						// }
-
-
-
+						if (dropRate.conditions != null && !bannerBan.Contains(dropRate.itemId))
+						{
+							List<Recipe> bannedRec = new List<Recipe>();
+							if (!bannedRec.Contains(recipe))
+							{
+								List<IItemDropRuleCondition> bannerConds = new List<IItemDropRuleCondition>();
+								bannerConds = dropRate.conditions;
+								bool willBeUsed = true;
+								List<int> l = new List<int>();
+								foreach (var item in dropRate.conditions)
+								{
+									if (!item.GetType().Name.Contains("Wave") && !item.GetType().Name.Contains("Chance") && !item.GetType().Name.Contains("Not") && !item.GetType().Name.Contains("Gati") && !item.GetType().Name.Contains("Gate"))
+									{
+										willBeUsed = false;
+									}
+								}
+								if (willBeUsed)
+								{
+									recipe.Register();
+									bannedRec.Add(recipe);
+									idBan.Add(dropRate.itemId);
+								}
+							}
+							// if (dropRate.conditions.Count == 1 && dropRate.conditions[0] == Terraria.GameContent.ItemDropRules.co)
+							// {
+							// }
+							// foreach (IItemDropRuleCondition cond in bannerConds)
+							// {
+							// 	recipe.AddCondition(Utils.FromDropCondition(cond, npc));
+							// 	l.Add(cond.GetHashCode());
+							// }
+							// if (!duplicates.ContainsKey(dropRate.itemId))
+							// {
+							// 	recipe.Register();
+							// 	duplicates.Add(dropRate.itemId, [l]);
+							// }
+							// else if (!(duplicates[dropRate.itemId].Contains(l)))
+							// {
+							// 	recipe.Register();
+							// 	duplicates[dropRate.itemId].Add(l);
+							// }
+						}
 					}
 					if (!ModContent.GetInstance<ShimmerNStuffConfig>().GenerateMobDropsTransmutations)
 					{
@@ -776,7 +824,6 @@ namespace SimmerNStuffQOL
 					}
 					if (!(banned.Contains(dropRate.itemId)) && !(ids.Contains(dropRate.itemId)) && !(bags.Contains(dropRate.itemId)) && !(bagContainments.Contains(dropRate.itemId)))
 					{
-
 						//float round = (float)Math.Round(dropRate.dropRate, 4);
 						if (dropRate.conditions != null)
 						{
@@ -812,7 +859,6 @@ namespace SimmerNStuffQOL
 									// }
 									//condDictionary[hash][round].Add(dropRate.conditions);
 								}
-
 							}
 							else
 							{
@@ -921,9 +967,6 @@ namespace SimmerNStuffQOL
 				{
 					foreach (KeyValuePair<float, List<int>> entry1 in entry.Value)
 					{
-						foreach (int item in entry1.Value)
-						{
-						}
 						if (!keys.Contains(entry1.Key))
 						{
 							List<int> values = new List<int>();
@@ -946,7 +989,6 @@ namespace SimmerNStuffQOL
 							values.RemoveAll(x => ids.Contains(x));
 							if (values.Count > 1)
 							{
-
 								allItems.Add(values);
 								foreach (int value in values)
 								{
@@ -956,12 +998,10 @@ namespace SimmerNStuffQOL
 							}
 						}
 					}
-
 				}
 				allItems = Utils.FindIntersection(allItems);
 				foreach (List<int> ints in allItems)
 				{
-
 					foreach (int value in ints)
 					{
 						if (ints.IndexOf(value) < ints.Count - 1)
@@ -970,16 +1010,12 @@ namespace SimmerNStuffQOL
 							recipe.AddCustomShimmerResult(ints[ints.IndexOf(value) + 1], 1);
 							recipe.AddCondition(Condition.InEvilBiome);
 							recipe.AddCondition(Condition.NotInEvilBiome);
-
-
 							// foreach (IItemDropRuleCondition condition in conditionList[value])
 							// {
 							// 	NPC npc = new NPC();
 							// 	npc.SetDefaults(ID);
-
 							// 	recipe.AddDecraftCondition(Utils.FromDropCondition(condition, npc));
 							// }
-
 							List<Recipe> bannedRec = new List<Recipe>();
 							if (!bannedRec.Contains(recipe))
 							{
@@ -989,7 +1025,6 @@ namespace SimmerNStuffQOL
 						}
 						else
 						{
-
 							Recipe recipe = Recipe.Create(value);
 							recipe.AddCustomShimmerResult(ints[0], 1);
 							recipe.AddCondition(Condition.InEvilBiome);
