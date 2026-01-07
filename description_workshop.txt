@@ -1,5 +1,7 @@
 [h2][b]Shimmer And Stuff QOL[/b][/h2]
 
+[h2]Sourse code (github):[/h2] https://github.com/NorthKoreanDogEater228/SimmerNStuffQOL
+
 [h2]Description:[/h2]
 In this project i implemented some intresting (maybe not very original) QOL ideas that came in my head during vanilla playthroughs.
 All mod revolves around one original idea, that i had in mind when started this mod development, this idea being adding algorithm, that dynamically adds cykle shimmer transmutations for bossbag and crates (in fact every item that drop other items on LMB click and is listed in ItemDropDataBase) drops with equal drop chances (like class emblems from WOF).

@@ -323,10 +323,10 @@ namespace SimmerNStuffQOL
 		}
 		public override void PostAddRecipes()
 		{
-			foreach (Recipe rec in Main.recipe)
-			{
-				banned.Add(rec.createItem.type);
-			}
+			// foreach (Recipe rec in Main.recipe)
+			// {
+			// 	banned.Add(rec.createItem.type);
+			// }
 			for (int ID = 1; ID < ItemLoader.ItemCount; ID++)
 			{
 
